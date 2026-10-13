@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Soiskatel.Mcp/Soiskatel.Mcp.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Soiskatel.Mcp.Tests/Soiskatel.Mcp.Tests.csproj" />
+  </Folder>
+</Solution>

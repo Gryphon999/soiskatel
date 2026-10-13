@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Soiskatel.Mcp</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!-- Пакет NuGet: .NET tool с типом McpServer -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>soiskatel-mcp</ToolCommandName>
+    <PackageType>McpServer</PackageType>
+    <PackageId>Soiskatel.Mcp</PackageId>
+    <Version>1.0.0-rc.1</Version>
+    <Authors>Gryphon999</Authors>
+    <Description>MCP-сервер soiskatel: трекер откликов и проверка сопроводительных писем по правилам рунета. Работает локально, без сети.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Gryphon999/soiskatel</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Gryphon999/soiskatel</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>mcp;mcpserver;job-search;hh-ru;cover-letter;russian</PackageTags>
+
+    <!-- Самодостаточные пакеты под платформы: пользователю не нужен отдельный runtime -->
+    <RuntimeIdentifiers>win-x64;win-arm64;osx-arm64;linux-x64;linux-arm64;linux-musl-x64</RuntimeIdentifiers>
+    <PublishSelfContained>true</PublishSelfContained>
+
+    <!-- Шаблон: один файл при публикации -->
+    <PublishSingleFile>true</PublishSingleFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include=".mcp/server.json" Pack="true" PackagePath="/.mcp/" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
+    <PackageReference Include="ModelContextProtocol" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>
