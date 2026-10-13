@@ -1,0 +1,23 @@
+# Сборка .NET
+bin/
+obj/
+artifacts/
+TestResults/
+.vs/
+.idea/
+*.user
+
+# Личные данные соискателя: никогда не коммитим
+profile.md
+applications.md
+applications.md.*
+letters/
+interviews/
+*.pdf
+*.docx
+.env
+.env.*
+
+# Временное
+*.tmp
+.DS_Store
