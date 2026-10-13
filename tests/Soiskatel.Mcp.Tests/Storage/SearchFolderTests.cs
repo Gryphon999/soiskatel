@@ -45,6 +45,50 @@ public class SearchFolderTests
         Assert.Contains("Запустите Claude Code в папке поиска работы", ex.Message);
     }
 
+    [Fact]
+    public void EnsureExists_passes_for_ordinary_temp_folder()
+    {
+        using var temp = new TempFolder();
+        var folder = new SearchFolder(temp.Root);
+
+        folder.EnsureExists();
+    }
+
+    [Fact]
+    public void EnsureExists_throws_when_folder_itself_has_dot_git()
+    {
+        using var temp = new TempFolder();
+        Directory.CreateDirectory(Path.Combine(temp.Root, ".git"));
+        var folder = new SearchFolder(temp.Root);
+
+        var ex = Assert.Throws<StorageException>(folder.EnsureExists);
+        Assert.Contains("git-репозитория", ex.Message);
+        Assert.Contains(temp.Root, ex.Message);
+    }
+
+    [Fact]
+    public void EnsureExists_throws_when_parent_has_dot_git()
+    {
+        using var temp = new TempFolder();
+        Directory.CreateDirectory(Path.Combine(temp.Root, ".git"));
+        var child = Path.Combine(temp.Root, "poisk-raboty");
+        Directory.CreateDirectory(child);
+        var folder = new SearchFolder(child);
+
+        var ex = Assert.Throws<StorageException>(folder.EnsureExists);
+        Assert.Contains("git-репозитория", ex.Message);
+    }
+
+    [Fact]
+    public void EnsureExists_throws_when_dot_git_is_a_file_worktree_marker()
+    {
+        using var temp = new TempFolder();
+        File.WriteAllText(Path.Combine(temp.Root, ".git"), "gitdir: ../somewhere");
+        var folder = new SearchFolder(temp.Root);
+
+        Assert.Throws<StorageException>(folder.EnsureExists);
+    }
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]

@@ -40,5 +40,22 @@ public sealed class SearchFolder
     {
         if (!Directory.Exists(Root))
             throw new StorageException($"Папка поиска не найдена: {Root}. Запустите Claude Code в папке поиска работы.");
+
+        if (FindGitAncestor() is not null)
+            throw new StorageException(
+                $"Папка поиска внутри git-репозитория ({Root}). Личные данные могут попасть в коммит. "
+                + "Создайте отдельную папку вне репозиториев и запустите Claude Code в ней.");
+    }
+
+    private string? FindGitAncestor()
+    {
+        for (var dir = new DirectoryInfo(Root); dir is not null; dir = dir.Parent)
+        {
+            var candidate = Path.Combine(dir.FullName, ".git");
+            if (Directory.Exists(candidate) || File.Exists(candidate))
+                return dir.FullName;
+        }
+
+        return null;
     }
 }
