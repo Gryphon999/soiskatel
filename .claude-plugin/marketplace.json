@@ -1,0 +1,14 @@
+{
+  "name": "soiskatel",
+  "owner": { "name": "Gryphon999", "url": "https://github.com/Gryphon999" },
+  "description": "ИИ-помощник соискателя для Claude Code: разбор вакансий, честные письма, трекер откликов",
+  "plugins": [
+    {
+      "name": "soiskatel",
+      "source": "./plugins/soiskatel",
+      "description": "Скиллы: профиль, разбор вакансии, сопроводительное письмо, трекер откликов, тренировка собеседования",
+      "category": "productivity",
+      "tags": ["job-search", "hh-ru", "cover-letter", "russian"]
+    }
+  ]
+}

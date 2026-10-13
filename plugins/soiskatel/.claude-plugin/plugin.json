@@ -1,0 +1,11 @@
+{
+  "name": "soiskatel",
+  "displayName": "Соискатель",
+  "version": "1.0.0-rc.1",
+  "description": "ИИ-помощник соискателя: разбор вакансии, честное письмо по правилам рунета, трекер откликов, тренировка собеседования",
+  "author": { "name": "Gryphon999", "url": "https://github.com/Gryphon999" },
+  "homepage": "https://github.com/Gryphon999/soiskatel",
+  "repository": "https://github.com/Gryphon999/soiskatel",
+  "license": "MIT",
+  "keywords": ["job-search", "hh-ru", "cover-letter", "career", "russian"]
+}
