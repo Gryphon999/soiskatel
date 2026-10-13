@@ -114,6 +114,11 @@ public sealed class TrackerService(SearchFolder folder, TimeProvider time)
                 throw new TrackerException(
                     $"Строка №{number} не разобрана ({raw.Problem}). Исправьте её в applications.md вручную, строка файла {raw.LineNumber}.");
 
+            var rowCompany = ((ParsedRow)doc.Rows[number - 1]).Application.Company;
+            if (!string.IsNullOrWhiteSpace(company) && !CompanyName.AreSame(rowCompany, company))
+                throw new TrackerException(
+                    $"Строка №{number} относится к компании {rowCompany}, а не к {company}. Проверьте номер строки.");
+
             return number - 1;
         }
 

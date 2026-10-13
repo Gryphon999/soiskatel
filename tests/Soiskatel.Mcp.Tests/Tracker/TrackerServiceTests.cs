@@ -95,6 +95,23 @@ public class TrackerServiceTests
     }
 
     [Fact]
+    public void Update_by_row_number_and_company_mismatch_throws()
+    {
+        using var temp = new TempFolder();
+        var service = new TrackerService(new SearchFolder(temp.Root), Clock());
+        service.Add(Romashka());
+        service.Add(new NewApplication("Северный Код", "Python разработчик", "Habr Career", "", "", null));
+
+        var ex = Assert.Throws<TrackerException>(
+            () => service.Update("Северный Код", null, rowNumber: 1, "просмотрен", null));
+
+        Assert.Contains("Строка №1", ex.Message);
+        Assert.Contains("Ромашка Софт", ex.Message);
+        Assert.Contains("Северный Код", ex.Message);
+        Assert.Contains("Проверьте номер строки", ex.Message);
+    }
+
+    [Fact]
     public void Update_by_row_number()
     {
         using var temp = new TempFolder();
