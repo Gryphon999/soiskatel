@@ -6,6 +6,8 @@
 [![NuGet](https://img.shields.io/nuget/v/Soiskatel.Mcp)](https://www.nuget.org/packages/Soiskatel.Mcp)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
+![Разбор вакансии и письмо за полминуты](docs/demo.gif)
+
 ## Что умеет
 
 | Скажите Claude | Что получится |
