@@ -1,0 +1,31 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  nuget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Version from tag
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+      - name: All files carry the tag version
+        run: |
+          grep -q "<Version>$VERSION</Version>" src/Soiskatel.Mcp/Soiskatel.Mcp.csproj
+          grep -q "\"version\": \"$VERSION\"" src/Soiskatel.Mcp/.mcp/server.json
+          grep -q "Soiskatel.Mcp@$VERSION" plugins/soiskatel-mcp/.mcp.json
+          grep -q "\"version\": \"$VERSION\"" plugins/soiskatel/.claude-plugin/plugin.json
+          grep -q "\"version\": \"$VERSION\"" plugins/soiskatel-mcp/.claude-plugin/plugin.json
+      - run: dotnet test Soiskatel.slnx -c Release
+      - run: dotnet pack src/Soiskatel.Mcp/Soiskatel.Mcp.csproj -c Release -o artifacts
+      - run: dotnet nuget push "artifacts/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}

@@ -9,6 +9,13 @@
       "description": "Скиллы: профиль, разбор вакансии, сопроводительное письмо, трекер откликов, тренировка собеседования",
       "category": "productivity",
       "tags": ["job-search", "hh-ru", "cover-letter", "russian"]
+    },
+    {
+      "name": "soiskatel-mcp",
+      "source": "./plugins/soiskatel-mcp",
+      "description": "Необязательный MCP-сервер на .NET 10: трекер со статистикой и точная проверка писем. Нужен .NET 10 SDK.",
+      "category": "productivity",
+      "tags": ["mcp", "dotnet", "job-search"]
     }
   ]
 }

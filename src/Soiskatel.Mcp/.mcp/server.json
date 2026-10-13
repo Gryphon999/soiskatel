@@ -1,22 +1,30 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
-  "description": "<your description here>",
-  "name": "io.github.<your GitHub username here>/<your repo name>",
-  "version": "0.1.0-beta",
+  "name": "io.github.Gryphon999/soiskatel",
+  "description": "Трекер откликов и проверка сопроводительных писем по правилам рунета. Локально, без сети.",
+  "version": "1.0.0-rc.1",
   "packages": [
     {
       "registryType": "nuget",
-      "identifier": "<your package ID here>",
-      "version": "0.1.0-beta",
-      "transport": {
-        "type": "stdio"
-      },
+      "registryBaseUrl": "https://api.nuget.org",
+      "identifier": "Soiskatel.Mcp",
+      "version": "1.0.0-rc.1",
+      "transport": { "type": "stdio" },
       "packageArguments": [],
-      "environmentVariables": []
+      "environmentVariables": [
+        {
+          "name": "SOISKATEL_HOME",
+          "value": "{soiskatel_home}",
+          "variables": {
+            "soiskatel_home": {
+              "description": "Папка поиска работы с applications.md. Если не задана, используется рабочая папка.",
+              "isRequired": false,
+              "isSecret": false
+            }
+          }
+        }
+      ]
     }
   ],
-  "repository": {
-    "url": "https://github.com/<your GitHub username here>/<your repo name>",
-    "source": "github"
-  }
+  "repository": { "url": "https://github.com/Gryphon999/soiskatel", "source": "github" }
 }

@@ -19,6 +19,20 @@ jobs:
       - run: dotnet build Soiskatel.slnx --no-restore -c Release
       - run: dotnet test Soiskatel.slnx --no-build -c Release
 
+  plugin-validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install -g @anthropic-ai/claude-code
+      - run: claude plugin validate --strict .
+      - run: claude plugin validate --strict ./plugins/soiskatel
+      - run: claude plugin validate --strict ./plugins/soiskatel-mcp
+
   secrets-scan:
     runs-on: ubuntu-latest
     permissions:
