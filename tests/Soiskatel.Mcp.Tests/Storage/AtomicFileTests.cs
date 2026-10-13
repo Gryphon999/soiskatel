@@ -16,6 +16,7 @@ public class AtomicFileTests
         Assert.Equal("первая версия", File.ReadAllText(path));
         Assert.False(File.Exists(path + ".bak"));
         Assert.False(File.Exists(path + ".tmp"));
+        Assert.Empty(Directory.GetFiles(temp.Root, "*.tmp"));
     }
 
     [Fact]
@@ -49,5 +50,31 @@ public class AtomicFileTests
         using var temp = new TempFolder();
 
         Assert.Null(AtomicFile.ReadAllTextOrNull(temp.File("missing.md")));
+    }
+
+    [Fact]
+    public void Repeated_writes_leave_no_leftover_tmp_files()
+    {
+        using var temp = new TempFolder();
+        var path = temp.File("applications.md");
+
+        for (var i = 0; i < 20; i++)
+            AtomicFile.WriteAllText(path, $"версия {i}");
+
+        Assert.Equal("версия 19", File.ReadAllText(path));
+        Assert.Empty(Directory.GetFiles(temp.Root, "*.tmp"));
+    }
+
+    [Fact]
+    public void Failed_write_does_not_leave_a_temp_file_behind()
+    {
+        using var temp = new TempFolder();
+        // Папка вместо файла по целевому пути: File.Move/File.Replace упадёт.
+        var path = temp.File("blocked");
+        Directory.CreateDirectory(path);
+
+        Assert.ThrowsAny<IOException>(() => AtomicFile.WriteAllText(path, "содержимое"));
+
+        Assert.Empty(Directory.GetFiles(temp.Root, "*.tmp"));
     }
 }

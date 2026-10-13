@@ -184,6 +184,19 @@ public class TrackerServiceTests
     }
 
     [Fact]
+    public void Parallel_adds_do_not_lose_updates()
+    {
+        using var temp = new TempFolder();
+        var service = new TrackerService(new SearchFolder(temp.Root), Clock());
+
+        Parallel.For(0, 20, i => service.Add(Romashka($"Позиция {i}")));
+
+        var content = File.ReadAllText(temp.File(TrackerService.FileName));
+        var doc = TrackerTable.Parse(content);
+        Assert.Equal(20, doc.Applications.Count());
+    }
+
+    [Fact]
     public void Missing_search_folder_gives_clear_error()
     {
         var missing = Path.Combine(Path.GetTempPath(), "soiskatel-tests", "missing-" + Guid.NewGuid().ToString("N"));

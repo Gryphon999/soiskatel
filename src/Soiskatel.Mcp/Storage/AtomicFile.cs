@@ -9,13 +9,22 @@ public static class AtomicFile
 
     public static void WriteAllText(string path, string content)
     {
-        var temp = path + ".tmp";
-        File.WriteAllText(temp, content, Utf8NoBom);
+        var temp = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
+        try
+        {
+            File.WriteAllText(temp, content, Utf8NoBom);
 
-        if (File.Exists(path))
-            File.Replace(temp, path, path + ".bak", ignoreMetadataErrors: true);
-        else
-            File.Move(temp, path);
+            if (File.Exists(path))
+                File.Replace(temp, path, path + ".bak", ignoreMetadataErrors: true);
+            else
+                File.Move(temp, path);
+        }
+        catch
+        {
+            if (File.Exists(temp))
+                File.Delete(temp);
+            throw;
+        }
     }
 
     public static string? ReadAllTextOrNull(string path) =>
