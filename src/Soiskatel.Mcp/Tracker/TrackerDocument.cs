@@ -9,6 +9,12 @@ public sealed record TrackerDocument(
     /// <summary>Перевод строки, которым был записан исходный файл («\n» или «\r\n»).</summary>
     public string NewLine { get; init; } = "\n";
 
+    /// <summary>
+    /// Ложь означает: файл непустой, но в нём нет таблицы с заголовком формата soiskatel.
+    /// Пустой, пробельный или отсутствующий файл даёт true (можно начать таблицу заново).
+    /// </summary>
+    public bool HasTable { get; init; } = true;
+
     public static TrackerDocument Empty { get; } = new(["# Отклики", ""], [], []);
 
     public IEnumerable<JobApplication> Applications => Rows.OfType<ParsedRow>().Select(r => r.Application);

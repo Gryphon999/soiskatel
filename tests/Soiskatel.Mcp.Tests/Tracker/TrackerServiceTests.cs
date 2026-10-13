@@ -197,6 +197,52 @@ public class TrackerServiceTests
     }
 
     [Fact]
+    public void Add_throws_when_file_has_no_matching_header()
+    {
+        using var temp = new TempFolder();
+        File.WriteAllText(temp.File(TrackerService.FileName), "Мои заметки о поиске\n");
+        var service = new TrackerService(new SearchFolder(temp.Root), Clock());
+
+        var ex = Assert.Throws<TrackerException>(() => service.Add(Romashka()));
+
+        Assert.Contains("нет таблицы с заголовком формата soiskatel", ex.Message);
+    }
+
+    [Fact]
+    public void Stats_throws_when_file_has_no_matching_header()
+    {
+        using var temp = new TempFolder();
+        File.WriteAllText(temp.File(TrackerService.FileName), "Мои заметки о поиске\n");
+        var service = new TrackerService(new SearchFolder(temp.Root), Clock());
+
+        var ex = Assert.Throws<TrackerException>(() => service.Stats(null, null));
+
+        Assert.Contains("нет таблицы с заголовком формата soiskatel", ex.Message);
+    }
+
+    [Fact]
+    public void FindCompany_throws_when_file_has_no_matching_header()
+    {
+        using var temp = new TempFolder();
+        File.WriteAllText(temp.File(TrackerService.FileName), "Мои заметки о поиске\n");
+        var service = new TrackerService(new SearchFolder(temp.Root), Clock());
+
+        Assert.Throws<TrackerException>(() => service.FindCompany("Ромашка"));
+    }
+
+    [Fact]
+    public void Add_on_whitespace_only_file_creates_fresh_table()
+    {
+        using var temp = new TempFolder();
+        File.WriteAllText(temp.File(TrackerService.FileName), "   \n\n  ");
+        var service = new TrackerService(new SearchFolder(temp.Root), Clock());
+
+        var result = service.Add(Romashka());
+
+        Assert.Equal(1, result.Added.RowNumber);
+    }
+
+    [Fact]
     public void Missing_search_folder_gives_clear_error()
     {
         var missing = Path.Combine(Path.GetTempPath(), "soiskatel-tests", "missing-" + Guid.NewGuid().ToString("N"));

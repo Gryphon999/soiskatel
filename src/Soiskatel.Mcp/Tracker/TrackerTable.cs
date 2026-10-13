@@ -17,6 +17,8 @@ public static class TrackerTable
 
     public static TrackerDocument Parse(string content)
     {
+        var isBlank = string.IsNullOrWhiteSpace(content);
+
         if (content.Length > 0 && content[0] == '﻿')
             content = content[1..];
 
@@ -28,7 +30,7 @@ public static class TrackerTable
 
         var header = Array.FindIndex(lines, IsHeader);
         if (header < 0)
-            return new TrackerDocument(lines, [], []) { NewLine = newLine };
+            return new TrackerDocument(lines, [], []) { NewLine = newLine, HasTable = isBlank };
 
         var i = header + 1;
         if (i < lines.Length && Separator.IsMatch(lines[i]))

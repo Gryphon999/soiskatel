@@ -152,7 +152,15 @@ public sealed class TrackerService(SearchFolder folder, TimeProvider time)
     {
         folder.EnsureExists();
         var content = AtomicFile.ReadAllTextOrNull(folder.PathOf(FileName));
-        return content is null ? TrackerDocument.Empty : TrackerTable.Parse(content);
+        if (content is null)
+            return TrackerDocument.Empty;
+
+        var doc = TrackerTable.Parse(content);
+        if (!doc.HasTable)
+            throw new TrackerException(
+                "В applications.md нет таблицы с заголовком формата soiskatel. Поправьте заголовок по format.md или переименуйте файл.");
+
+        return doc;
     }
 
     private void Save(TrackerDocument document) =>

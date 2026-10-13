@@ -110,6 +110,22 @@ public class TrackerTableTests
         Assert.Empty(TrackerTable.Parse("").Rows);
 
     [Fact]
+    public void Empty_content_has_table_flag_true() =>
+        Assert.True(TrackerTable.Parse("").HasTable);
+
+    [Fact]
+    public void Whitespace_only_content_has_table_flag_true() =>
+        Assert.True(TrackerTable.Parse("   \n\n  ").HasTable);
+
+    [Fact]
+    public void Content_with_canonical_header_has_table_flag_true() =>
+        Assert.True(TrackerTable.Parse(Canonical).HasTable);
+
+    [Fact]
+    public void Text_without_table_has_table_flag_false() =>
+        Assert.False(TrackerTable.Parse("Мои заметки о поиске\n").HasTable);
+
+    [Fact]
     public void Windows_line_endings_survive_round_trip()
     {
         var crlf = Canonical.Replace("\n", "\r\n");
