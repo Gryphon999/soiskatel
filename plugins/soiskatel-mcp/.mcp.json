@@ -2,7 +2,7 @@
   "mcpServers": {
     "soiskatel": {
       "command": "dotnet",
-      "args": ["dnx", "Soiskatel.Mcp@1.0.0-rc.1", "--yes"],
+      "args": ["dnx", "Soiskatel.Mcp@1.0.0", "--yes"],
       "env": {
         "SOISKATEL_HOME": "${CLAUDE_PROJECT_DIR}"
       }

@@ -11,7 +11,7 @@
     <ToolCommandName>soiskatel-mcp</ToolCommandName>
     <PackageType>McpServer</PackageType>
     <PackageId>Soiskatel.Mcp</PackageId>
-    <Version>1.0.0-rc.1</Version>
+    <Version>1.0.0</Version>
     <Authors>Gryphon999</Authors>
     <Description>MCP-сервер soiskatel: трекер откликов и проверка сопроводительных писем по правилам рунета. Работает локально, без сети.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

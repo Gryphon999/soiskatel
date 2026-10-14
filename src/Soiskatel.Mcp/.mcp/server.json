@@ -2,13 +2,13 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
   "name": "io.github.Gryphon999/soiskatel",
   "description": "Трекер откликов и проверка сопроводительных писем по правилам рунета. Локально, без сети.",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0",
   "packages": [
     {
       "registryType": "nuget",
       "registryBaseUrl": "https://api.nuget.org",
       "identifier": "Soiskatel.Mcp",
-      "version": "1.0.0-rc.1",
+      "version": "1.0.0",
       "transport": { "type": "stdio" },
       "packageArguments": [],
       "environmentVariables": [
